@@ -38,6 +38,7 @@ function init() {
 function loadQuiz() {
     var questionNumber = 0;
     
+    //Get the element that stores the question
     var question = document.getElementById("question");
     loadNewQuestion(questionNumber, question);
     
@@ -50,7 +51,7 @@ function loadQuiz() {
     
     var answerOptions = [firstAnswer, secondAnswer, thirdAnswer, fourthAnswer];
     
-    //Load spans with questions
+    //Load all answer options
     loadNewAnswers(questionNumber, answerOptions);
     
     //Sets a listener for the next button
@@ -64,7 +65,11 @@ function loadQuiz() {
     }, false);
 }
 
-
+/*******
+ * Name: nextQuestion
+ * Function: loads the next question in the data array
+ * Parameters: "questionNumber" is the integer place of the question to load on the page. "question" is the DOM node where the new question will go. "answerOptions" is an array of DOM nodes where the new answer options will be loaded
+ ******/
 function nextQuestion(questionNumber, question, answerOptions) {
     alert(questionNumber);
     loadNewQuestion(questionNumber, question);
@@ -72,16 +77,30 @@ function nextQuestion(questionNumber, question, answerOptions) {
     
 }
 
+/*******
+ * Name: loadNewAnswers
+ * Function: loads the HTML for the new answer options
+ * Parameters: "questionNumber" is the integer place of the question to load on the page. "answerOptions" is an array of DOM nodes where the new answer options will be loaded
+ ******/
 function loadNewAnswers(questionNumber, answerOptions) {
     for (var i = 0; i < 4; i++) {
         answerOptions[i].innerHTML = data[questionNumber].choices[i];
     }
 }
 
+/*******
+ * Name: loadNewQuestion
+ * Function: loads the HTML for the new question
+ * Parameters: "questionNumber" is the integer place of the question to load on the page. "question" is the DOM node where the new question will go
+ ******/
 function loadNewQuestion(questionNumber, question) {
     question.innerHTML = data[questionNumber].question;
 }
 
+/*******
+ * Name: endQuiz
+ * Function: terminates the quiz and provides score to the user.
+ ******/
 function endQuiz() {
     alert("dunzo");
 }
