@@ -37,6 +37,7 @@ function init() {
  ******/
 function loadQuiz() {
     var questionNumber = 0;
+    var rightAnswers = 0;
     
     //Get the element that stores the question
     var question = document.getElementById("question");
@@ -57,8 +58,14 @@ function loadQuiz() {
     //Sets a listener for the next button
     var nextBtn = document.getElementById("next");
     nextBtn.addEventListener("click", function() {
+        if (isAnswerCorrect(questionNumber) == true) {
+            rightAnswers++;
+            alert("answer is correct!!!!");
+        } else {
+            alert("answer is wrong bitch");
+        }
         if (questionNumber === data.length - 1) {
-            endQuiz();
+            endQuiz(rightAnswers);
         } else {
             nextQuestion(++questionNumber, question, answerOptions);
         }
@@ -71,7 +78,8 @@ function loadQuiz() {
  * Parameters: "questionNumber" is the integer place of the question to load on the page. "question" is the DOM node where the new question will go. "answerOptions" is an array of DOM nodes where the new answer options will be loaded
  ******/
 function nextQuestion(questionNumber, question, answerOptions) {
-    alert(questionNumber);
+    //alert(questionNumber);
+    
     loadNewQuestion(questionNumber, question);
     loadNewAnswers(questionNumber, answerOptions);
     
@@ -97,12 +105,26 @@ function loadNewQuestion(questionNumber, question) {
     question.innerHTML = data[questionNumber].question;
 }
 
+
+function isAnswerCorrect(questionNumber) {
+    var radios = document.getElementsByName("answers");
+    
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked == true) {
+            if (radios[i].value == data[questionNumber].correctAnswer) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 /*******
  * Name: endQuiz
  * Function: terminates the quiz and provides score to the user.
  ******/
-function endQuiz() {
-    alert("dunzo");
+function endQuiz(rightAnswers) {
+    alert("Done quiz. Right answers: " + rightAnswers);
 }
 
 
