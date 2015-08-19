@@ -1,0 +1,19 @@
+{
+ "data" : [
+     {
+	    "question" : "How many stars are in the US flag?",
+	    "choices" : ["50", "34", "1", "51"],
+	    "correctAnswer" : 0
+     },
+     {
+         "question" : "How old is Stacey",
+         "choices" : ["Too old", "21", "30", "28"],
+         "correctAnswer" : 2
+     },
+     {
+         "question" : "Who is not black?",
+         "choices" : ["Morgan Freeman", "Michael Jackson", "John Travolta", "Barack Obama"],
+         "correctAnswer" : 2
+     }
+ ]
+}
