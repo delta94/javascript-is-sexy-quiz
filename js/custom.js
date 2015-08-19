@@ -39,6 +39,16 @@ function loadQuiz() {
     var questionNumber = 0;
     var rightAnswers = 0;
     
+    //Array to track correct answers
+    var rAnswers = function() {
+      var answerArray = new Array();
+      for (var i = 0; i < data.length; i++) {
+          answerArray.push(false);
+      }
+      return answerArray;
+    }();
+    
+    
     //Get the element that stores the question
     var question = document.getElementById("question");
     loadNewQuestion(questionNumber, question);
@@ -64,15 +74,23 @@ function loadQuiz() {
             return;
         }
         if (isAnswerCorrect(questionNumber) == true) {
-            rightAnswers++;
+            rAnswers[questionNumber] = true;
             alert("answer is correct!!!!");
         } else {
             alert("answer is wrong bitch");
         }
         if (questionNumber === data.length - 1) {
-            endQuiz(rightAnswers);
+            endQuiz(rAnswers);
         } else {
             nextQuestion(++questionNumber, question, answerOptions);
+        }
+    }, false);
+    
+    //Sets a listener for the back button
+    var backBtn = document.getElementById("back");
+    backBtn.addEventListener("click", function() {
+        if (questionNumber > 0) {
+            previousQuestion(--questionNumber, question, answerOptions, rAnswers);
         }
     }, false);
 }
@@ -87,7 +105,25 @@ function nextQuestion(questionNumber, question, answerOptions) {
     
     loadNewQuestion(questionNumber, question);
     loadNewAnswers(questionNumber, answerOptions);
+    loadBackButton(questionNumber);
     
+}
+
+/*******
+ * Name: previousQuestion
+ * Function: loads previous next question in the data array
+ * Parameters: "questionNumber" is the integer place of the question to load on the page. "question" is the DOM node where the new question will go. "answerOptions" is an array of DOM nodes where the new answer options will be loaded. "rAnswers" is a boolean array that shows which questions have been answered correctly.
+ ******/
+function previousQuestion(questionNumber, question, answerOptions, rAnswers) {
+    loadNewQuestion(questionNumber, question);
+    loadNewAnswers(questionNumber, answerOptions);
+    
+    //Reset correct answer count in case answered right previously
+    rAnswers[questionNumber] = false;
+    
+    if (questionNumber < 1) {
+        hideBackButton();
+    } 
 }
 
 /*******
@@ -141,10 +177,14 @@ function isAnswerCorrect(questionNumber) {
  * Name: endQuiz
  * Function: terminates the quiz and provides score to the user.
  ******/
-function endQuiz(rightAnswers) {
+function endQuiz(rAnswers) {
     //alert("Done quiz. Right answers: " + rightAnswers);
     hideQuiz();
-    showResult(rightAnswers);
+    var correctAnswers = 0;
+    for (var i = 0; i < rAnswers.length; i++) {
+        if (rAnswers[i] == true) correctAnswers++;
+    }
+    showResult(correctAnswers);
 }
 
 
@@ -187,4 +227,23 @@ function userAnsweredQuestion() {
     return false;
 }
 
+/*******
+ * Name: loadBackButton
+ * Function: makes the back button visible when not the initial question
+ * Parameter: "questionNumber" is the current question being displayed
+ ******/
+function loadBackButton(questionNumber) {
+    if (questionNumber > 0) {
+        var backBtn = document.getElementById("back");
+        backBtn.className = "visible";
+    }
+}
 
+/*******
+ * Name: hideBackButton
+ * Function: Hides the back button in the HTML
+ ******/
+function hideBackButton() {
+    var backBtn = document.getElementById("back");
+    backBtn.className = "hidden";
+}
