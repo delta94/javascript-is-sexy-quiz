@@ -134,11 +134,20 @@ function endQuiz(rightAnswers) {
     showResult(rightAnswers);
 }
 
+
+/*******
+ * Name: hideQuiz
+ * Function: Hides the quiz div from the browser
+ ******/
 function hideQuiz() {
     var quiz = document.getElementById("quiz");
     quiz.className = "hidden";
 }
 
+/*******
+ * Name: showResult
+ * Function: Show's the result div and computes the score for the user
+ ******/
 function showResult(rightAnswers) {
     //Updates result page with correct score
     var score = document.getElementById("score");
