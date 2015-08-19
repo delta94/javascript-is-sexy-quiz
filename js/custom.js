@@ -105,7 +105,12 @@ function loadNewQuestion(questionNumber, question) {
     question.innerHTML = data[questionNumber].question;
 }
 
-
+/*******
+ * Name: isAnswerCorrect
+ * Function: determines whether quiz answer is correct
+ * Parameters: "questionNumber" is the integer place of the question currently in the HTML.
+ * Return: returns a boolean depending on whether or not the user answered correctly
+******/
 function isAnswerCorrect(questionNumber) {
     var radios = document.getElementsByName("answers");
     
@@ -124,7 +129,24 @@ function isAnswerCorrect(questionNumber) {
  * Function: terminates the quiz and provides score to the user.
  ******/
 function endQuiz(rightAnswers) {
-    alert("Done quiz. Right answers: " + rightAnswers);
+    //alert("Done quiz. Right answers: " + rightAnswers);
+    hideQuiz();
+    showResult(rightAnswers);
+}
+
+function hideQuiz() {
+    var quiz = document.getElementById("quiz");
+    quiz.className = "hidden";
+}
+
+function showResult(rightAnswers) {
+    //Updates result page with correct score
+    var score = document.getElementById("score");
+    score.innerHTML = rightAnswers;
+    
+    //Shows results page
+    var result = document.getElementById("result");
+    result.className = "visible";
 }
 
 
