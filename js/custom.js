@@ -58,6 +58,11 @@ function loadQuiz() {
     //Sets a listener for the next button
     var nextBtn = document.getElementById("next");
     nextBtn.addEventListener("click", function() {
+        //if question not answered, notify user they must answer
+        if (userAnsweredQuestion() == false) {
+            alert("You have to answer the question before moving on");
+            return;
+        }
         if (isAnswerCorrect(questionNumber) == true) {
             rightAnswers++;
             alert("answer is correct!!!!");
@@ -93,6 +98,14 @@ function nextQuestion(questionNumber, question, answerOptions) {
 function loadNewAnswers(questionNumber, answerOptions) {
     for (var i = 0; i < 4; i++) {
         answerOptions[i].innerHTML = data[questionNumber].choices[i];
+    }
+    
+    var radios = document.getElementsByName("answers");
+    
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked == true) {
+            radios[i].checked = false;
+        }
     }
 }
 
@@ -156,6 +169,22 @@ function showResult(rightAnswers) {
     //Shows results page
     var result = document.getElementById("result");
     result.className = "visible";
+}
+
+/*******
+ * Name: userAnsweredQuestion
+ * Function: Returns true if the user answered the question, false otherwise
+ ******/
+function userAnsweredQuestion() {
+    var radios = document.getElementsByName("answers");
+    
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked == true) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 
