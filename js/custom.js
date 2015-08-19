@@ -101,9 +101,14 @@ function loadQuiz() {
  * Parameters: "questionNumber" is the integer place of the question to load on the page. "question" is the DOM node where the new question will go. "answerOptions" is an array of DOM nodes where the new answer options will be loaded
  ******/
 function nextQuestion(questionNumber, question, answerOptions) {
-    //alert(questionNumber);
     
-    loadNewQuestion(questionNumber, question);
+    $("#question").fadeOut("fast", function() {
+        loadNewQuestion(questionNumber, question);
+    });
+    $("#question").fadeIn("fast");
+    
+
+    //loadNewQuestion(questionNumber, question);
     loadNewAnswers(questionNumber, answerOptions);
     loadBackButton(questionNumber);
     
@@ -151,7 +156,8 @@ function loadNewAnswers(questionNumber, answerOptions) {
  * Parameters: "questionNumber" is the integer place of the question to load on the page. "question" is the DOM node where the new question will go
  ******/
 function loadNewQuestion(questionNumber, question) {
-    question.innerHTML = data[questionNumber].question;
+    //question.innerHTML = data[questionNumber].question;
+    $(question).text(data[questionNumber].question);
 }
 
 /*******
@@ -179,12 +185,16 @@ function isAnswerCorrect(questionNumber) {
  ******/
 function endQuiz(rAnswers) {
     //alert("Done quiz. Right answers: " + rightAnswers);
-    hideQuiz();
-    var correctAnswers = 0;
-    for (var i = 0; i < rAnswers.length; i++) {
-        if (rAnswers[i] == true) correctAnswers++;
-    }
-    showResult(correctAnswers);
+    //hideQuiz();
+    $("#quiz").fadeOut("fast");
+    $("#result").fadeIn("fast", function() {
+        var correctAnswers = 0;
+        for (var i = 0; i < rAnswers.length; i++) {
+            if (rAnswers[i] == true) correctAnswers++;
+        }
+        showResult(correctAnswers);
+    });
+    
 }
 
 
